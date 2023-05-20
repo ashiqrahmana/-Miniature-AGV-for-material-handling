@@ -1,0 +1,13 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' {$PORT COM9}
+
+Pot VAR Word  'Variable to hold results
+
+Main:
+    HIGH 10    'Discharge network
+    PAUSE 1    'Time to fully discharge
+    RCTIME 7,1,Pot  'Read charge time and store in Pot
+    DEBUG ? Pot    'Display value of Pot
+    PAUSE 500    'Short pause
+GOTO Main    'Jump back to beginning

@@ -1,0 +1,24 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+'Baud CON $9600
+Baud CON $54
+M1 VAR Word
+X CON 10
+Y CON 20
+c1 CON 30
+c2 CON 40
+
+DO
+  SERIN 10, Baud, [M1]
+  'SEROUT 11, Baud, ["wotha deiii it works machaaa"]
+  SEROUT 11, Baud, [DEC X]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC Y]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC c1]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC c2]
+  PAUSE 1000
+LOOP
+END

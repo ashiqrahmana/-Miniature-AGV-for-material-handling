@@ -1,0 +1,142 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' {$PORT COM9}
+
+'Declaring the variables
+'for IR sensor 1
+irDetect1 VAR Bit
+flag1 VAR Bit
+c1 VAR Word
+
+'for ir sensor 2
+irDetect2 VAR Bit
+flag2 VAR Bit
+c2 VAR Word
+
+'for accelerometer
+X VAR Byte  'accx
+Y VAR Byte  'accy
+
+'to control motor
+M1 VAR Word
+M2 VAR Word
+M VAR Word
+
+'the baudrate mode
+Baud CON $54
+
+'intialising vital flags and counters
+c1 = 0
+flag1 = 1
+c2 = 0
+flag2 = 1
+
+M = 0
+
+main:
+  'if conditions to control the motor
+  IF M = 48 THEN              ' is 48 --> ascii(0) the bot moves left
+    GOTO left
+  ELSEIF M = 49 THEN          ' is 49 --> ascii(1) the bot moves right
+    GOTO right
+  ELSEIF M = 50 THEN          ' is 50 --> ascii(2) the bot moves forward
+    GOTO straight
+  ELSEIF M = 51 THEN          ' is 51 --> ascii(3) the bot moves stop
+    GOTO stopbot
+
+  ENDIF
+
+  RCTIME 3,1,X  'obtain the accelerometer values - X axis
+  RCTIME 4,1,Y  'obtain the accelerometer values - Y axis
+
+  'to print out the sensor values in the format X|Y|c1|c2\r
+  SEROUT 11, Baud, [DEC X]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC Y]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC c1]
+  SEROUT 11, Baud, ["|"]
+  SEROUT 11, Baud, [DEC c2]
+
+  'to obtain input from RPI
+  SERIN 10, Baud, [M]
+
+  'printing for debugging and convience
+  DEBUG ? M
+  'DEBUG "|"
+  'DEBUG ? c1, CR
+
+GOSUB main
+
+ir:
+  'Reading the IR sensor 1
+  FREQOUT 7, 1, 38500
+  irDetect1 = IN0
+
+  ' the ir sensor should be high and also should be not equal to the previous value that is flag != 1
+  IF irDetect1 = 1 & flag1 = 0 THEN
+     flag1 = 1
+     c1 =c1 + 1
+  ENDIF
+
+  ' to refresh the flag variable
+  IF irDetect1 = 0 THEN
+     flag1 = 0
+  ENDIF
+
+  'Reading the IR sensor 2
+  FREQOUT 8, 1, 38500
+  irDetect2 = IN9
+
+  ' the ir sensor should be high and also should be not equal to the previous value that is flag != 1
+  IF irDetect2 = 1 & flag2 = 0 THEN
+     flag2 = 1
+     c2 =c2 + 1
+  ENDIF
+
+  ' to refresh the flag variable
+  IF irDetect2 = 0 THEN
+     flag2 = 0
+  ENDIF
+RETURN
+
+'Subroutines to drive the motor in defined directions and speeds
+straight:
+  ' FOR time= 0 TO 1
+  PULSOUT 12, 200
+  PULSOUT 13, 500
+  PAUSE 1
+  GOSUB ir
+  ' NEXT
+  M = 0
+GOTO main
+
+stopbot:
+  ' FOR time= 0 TO 1
+  PULSOUT 12, 0
+  PULSOUT 13, 0
+  PAUSE 1
+  GOSUB ir
+  ' NEXT
+  M = 0
+GOTO main
+
+left:
+  ' FOR time= 0 TO 1
+  PULSOUT 12, 200
+  PULSOUT 13, 200
+  PAUSE 1
+  GOSUB ir
+  ' NEXT
+  M = 0
+GOTO main
+
+right:
+  ' FOR time= 0 TO 1
+  PULSOUT 12, 500
+  PULSOUT 13, 500
+  PAUSE 1
+  GOSUB ir
+  ' NEXT
+  M = 0
+GOTO main

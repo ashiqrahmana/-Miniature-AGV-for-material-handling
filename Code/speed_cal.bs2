@@ -1,0 +1,101 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' {$PORT COM9}
+irDetect1 VAR Bit
+flag1 VAR Bit
+c1 VAR Word
+c1 = 0
+flag1 = 1
+
+irDetect2 VAR Bit
+flag2 VAR Bit
+c2 VAR Word
+c2 = 0
+flag2 = 1
+
+X VAR Byte  'accx
+Y VAR Byte  'accy
+
+outputData VAR Byte(4)
+
+M1 VAR Word
+M2 VAR Word
+M VAR Word
+
+Baud CON $54
+
+M = 0
+
+DO
+
+  FREQOUT 7, 1, 38500
+  irDetect1 = IN0
+
+  IF irDetect1 = 1 & flag1 = 0 THEN
+     flag1 = 1
+     c1 =c1 + 1
+  ENDIF
+
+  IF irDetect1 = 0 THEN
+     flag1 = 0
+  ENDIF
+
+  'DEBUG "IRDetect 1 = ", BIN1 irDetect1
+  'DEBUG "  flag 1 = ", BIN1 flag1
+  'DEBUG "  Counter 1 = ", DEC c1
+
+  'PAUSE 100
+
+  IF M = 48 THEN
+  PULSOUT 12, 0
+  PULSOUT 13, 1000
+
+  ELSEIF M = 49 THEN
+  PULSOUT 12, 1000
+  PULSOUT 13, 0
+
+  ELSEIF M = 50 THEN
+  PULSOUT 12, 500
+  PULSOUT 13, 500
+
+  ELSEIF M = 51 THEN
+  PULSOUT 12, 0
+  PULSOUT 13, 0
+
+  ENDIF
+  'PAUSE 2
+
+
+  FREQOUT 8, 1, 38500
+  irDetect2 = IN9
+
+  IF irDetect2 = 1 & flag2 = 0 THEN
+     flag2 = 1
+     c2 =c2 + 1
+  ENDIF
+
+  IF irDetect2 = 0 THEN
+     flag2 = 0
+  ENDIF
+
+  'DEBUG "       IRDetect 2 = ", BIN1 irDetect2
+  'DEBUG "  flag 2 = ", BIN1 flag2
+  'DEBUG "  Counter 2 = ", DEC c2
+
+    HIGH 10    'Discharge network
+    PAUSE 1    'Time to fully discharge
+    RCTIME 3,1,X  'Read charge time and store in Pot
+    RCTIME 4,1,Y  'Read charge time and store in Pot
+    'DEBUG " ACC X AXIS ",DEC X        'Display value of Pot
+    'DEBUG " ACC Y AXIS ",DEC Y, CR    'Display value of Pot
+
+    SEROUT 11, Baud, [DEC X]
+    SEROUT 11, Baud, ["|"]
+    SEROUT 11, Baud, [DEC Y]
+    SEROUT 11, Baud, ["|"]
+    SEROUT 11, Baud, [DEC c1]
+    SEROUT 11, Baud, ["|"]
+    SEROUT 11, Baud, [DEC c2]
+    SERIN 10, Baud, [M]
+
+LOOP
