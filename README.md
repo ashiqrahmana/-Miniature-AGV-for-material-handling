@@ -53,6 +53,6 @@ It is always assumed that the robot is placed parallel to X-axis and at (0,0). T
 ## Assembled Bot
 ![Bot Image](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/Images/Bot.jpeg?raw=true)
 
-## Final Result Visualized
+## Final Result
 
-![Final Result Viz](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/boebot-recording.gif)
+![Final Result](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/Final_result.gif)
