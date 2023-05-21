@@ -4,7 +4,7 @@
 To build a miniature AGV that can navigate from given starting coordinate to an ending coordinate.
 
 ## **System Architecture**
-![System Architecture](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/tree/main/Architecture.png?raw=true)
+![System Architecture](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/Architecture.png)
 
 Higher Level Controller: Raspberry Pi 4B
 
@@ -15,14 +15,14 @@ Lower Level Controller: Basic Stamp 2
 2. Accelerometer - ADXL 335
 
 ## Circuit
-![Circuit Diagram](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/tree/main/Circuit.png?raw=true)
+![Circuit Diagram](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/Circuit.png?raw=true)
 
 ## **Approach**
 
 ### User Input
 User Input User input is taken in via GUI built in Python using TKINTER library. 
 
-![GUI Image](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/tree/main/GUI_Annotated.png?raw=true)
+![GUI Image](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/GUI_Annotated.png?raw=true)
 
 Once user input is obtained, the data is then sent to lower level controller via serial communication.
 
@@ -42,7 +42,7 @@ It is always assumed that the robot is placed parallel to X-axis and at (0,0). T
 
 
 ## Assembled Bot
-![Bot Image](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/tree/main/Bot.jpeg?raw=true)
+![Bot Image](https://github.com/ashiqrahmana/Miniature-AGV-for-material-handling/blob/main/Bot.jpeg?raw=true)
 
 ## Final Result Visualized
 
