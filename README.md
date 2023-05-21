@@ -32,13 +32,21 @@ It is always assumed that the robot is placed parallel to X-axis and at (0,0). T
 
 ## Folder Structure
 |-Code
+
 |----AGV_combined.py  -  Main Python code with GUI and Serial communication 
+
 |----basic_ip_op.bs2  -  Code to read and process all Inputs and Outputs on BS2
+
 |----basicipop.py     -  Serial test code
+
 |----basicipop2.py    -  Serial communicaton code for data transfer
+
 |----niri_code.bs2    -  Basic Drive code on BS2
+
 |----speed_cal.bs2    -  Sensor data extraction
+
 |-Images              -  All images related to the project
+
 |-design              -  All CAD files related to the project
 
 
